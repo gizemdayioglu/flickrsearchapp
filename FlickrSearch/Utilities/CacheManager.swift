@@ -8,9 +8,9 @@
 
 import UIKit
 
-class DataCache: NSObject {
+class CacheManager: NSObject {
 
-    static let shared = DataCache()
+    static let shared = CacheManager()
 
     private(set) var imageCache: NSCache<AnyObject, AnyObject> = NSCache()
 

@@ -68,7 +68,6 @@ class FlickrServiceTests: XCTestCase {
 
     func testValidSearchText() {
         ServiceManager().request("dogs", pageNo: 1) { (result) in
-            
             switch result {
             case .success(let results):
                 if results != nil {

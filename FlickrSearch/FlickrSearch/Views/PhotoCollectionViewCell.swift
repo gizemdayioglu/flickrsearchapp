@@ -11,7 +11,6 @@ import UIKit
 class PhotoCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var imageView: UIImageView!
-    
     static let nibName = "PhotoCollectionViewCell"
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,15 +24,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         didSet {
             if let model = model {
                 imageView.image = UIImage(named: "placeholder")
-                ServiceManager.shared.retrieveImage(model.imageURL) { (result) in
-                    switch result {
-                       case .success(let image):
-                         self.imageView.image = image
-                       default:
-                         break
-                  }
-                    
-               }
+                self.imageView.loadImage(urlString: model.imageURL)
             }
         }
     }
