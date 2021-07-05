@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:FlickrSearch/Data/SearchData+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:FlickrSearch/Data/SearchData+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:FlickrSearch.xcodeproj">
    </FileRef>
    <FileRef

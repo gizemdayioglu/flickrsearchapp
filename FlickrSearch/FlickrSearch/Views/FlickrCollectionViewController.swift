@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class FlickrCollectionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
@@ -22,12 +23,52 @@ class FlickrCollectionViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         viewModelClosures()
+        getCoreData()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    func getCoreData()
+    {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
+
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "SearchData")
+        do {
+            let results:NSArray = try context.fetch(request) as NSArray
+            for result in results
+            {
+                let searchedText = result as! SearchData
+                if !(searchedText.searchedText?.isNullOrEmpty())! {
+                    searchTexts.append(searchedText.searchedText!)
+                }
+            }
+        }
+        catch
+        {
+            print("Fetch Failed")
+        }
+    }
+
+    func setCoreData(text: String)
+    {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
+
+        let entity = NSEntityDescription.entity(forEntityName: "SearchData", in: context)
+        let searchData = NSManagedObject(entity: entity!, insertInto: context)
+        searchData.setValue("\(text)", forKeyPath: "searchedText")
+        do
+        {
+            try context.save()
+        }
+        catch
+        {
+            print("context save error")
+        }
     }
 }
 extension FlickrCollectionViewController {
@@ -119,6 +160,7 @@ extension FlickrCollectionViewController: UISearchControllerDelegate, UISearchBa
         if !text.isNullOrEmpty() {
             collectionView.reloadData()
             searchTexts.append(text)
+            setCoreData(text: text)
             tableView.reloadData()
             hideTableView()
             searchPhotos(text)
