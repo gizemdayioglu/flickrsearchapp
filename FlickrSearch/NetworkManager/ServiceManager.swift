@@ -36,8 +36,8 @@ class ServiceManager: NSObject {
                 }
             case let .failure(error):
                 print("Json could not be created.", error)
-              }
-            }
+                }
+           }
         }
     func response(_ data: Data) -> FlickrResults? {
         do {

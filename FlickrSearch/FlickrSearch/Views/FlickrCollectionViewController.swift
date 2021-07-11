@@ -7,15 +7,14 @@
 //
 
 import UIKit
-import CoreData
 
 class FlickrCollectionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    
     var searchTexts = [String]()
     var selected: String?
+    var coreDataViewModel = CoreDataViewModel()
     private var searchBarController: UISearchController!
     private var numberOfColumns: CGFloat = FlickrConstants.defaultColumnCount
     private var viewModel = FlickrViewModel()
@@ -23,7 +22,9 @@ class FlickrCollectionViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         viewModelClosures()
-        getCoreData()
+        coreDataViewModel.getData {
+            self.searchTexts = self.coreDataViewModel.searchTexts
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -31,45 +32,7 @@ class FlickrCollectionViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    func getCoreData()
-    {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
 
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "SearchData")
-        do {
-            let results:NSArray = try context.fetch(request) as NSArray
-            for result in results
-            {
-                let searchedText = result as! SearchData
-                if !(searchedText.searchedText?.isNullOrEmpty())! {
-                    searchTexts.append(searchedText.searchedText!)
-                }
-            }
-        }
-        catch
-        {
-            print("Fetch Failed")
-        }
-    }
-
-    func setCoreData(text: String)
-    {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
-
-        let entity = NSEntityDescription.entity(forEntityName: "SearchData", in: context)
-        let searchData = NSManagedObject(entity: entity!, insertInto: context)
-        searchData.setValue("\(text)", forKeyPath: "searchedText")
-        do
-        {
-            try context.save()
-        }
-        catch
-        {
-            print("context save error")
-        }
-    }
 }
 extension FlickrCollectionViewController {
     fileprivate func configureUI() {
@@ -78,7 +41,8 @@ extension FlickrCollectionViewController {
         navigationController?.navigationItem.largeTitleDisplayMode = .automatic
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(UINib(nibName: PhotoCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: PhotoCollectionViewCell.nibName)
+        collectionView.register(UINib(nibName: PhotoCollectionViewCell.nibName, bundle: nil),
+            forCellWithReuseIdentifier: PhotoCollectionViewCell.nibName)
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
@@ -160,7 +124,7 @@ extension FlickrCollectionViewController: UISearchControllerDelegate, UISearchBa
         if !text.isNullOrEmpty() {
             collectionView.reloadData()
             searchTexts.append(text)
-            setCoreData(text: text)
+            coreDataViewModel.setData(searchText: text)
             tableView.reloadData()
             hideTableView()
             searchPhotos(text)
@@ -173,13 +137,17 @@ extension FlickrCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.photoArray.count
     }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath)
+                         -> UICollectionViewCell {
         // swiftlint:disable force_cast
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.nibName, for: indexPath) as! PhotoCollectionViewCell
         cell.imageView.image = nil
         return cell
     }
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
         guard let cell = cell as? PhotoCollectionViewCell else {
             return
         }
@@ -192,8 +160,10 @@ extension FlickrCollectionViewController: UICollectionViewDataSource {
 }
 
 extension FlickrCollectionViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width)/numberOfColumns, height: (collectionView.bounds.width)/numberOfColumns)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (collectionView.bounds.width)/numberOfColumns,
+               height: (collectionView.bounds.width)/numberOfColumns)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0

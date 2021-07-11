@@ -13,15 +13,14 @@ extension String {
         let trimmed = self.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmed.isEmpty {
             return true
-        }else { return false }
+        } else { return false }
     }
 }
 extension UIImageView {
     func loadImage(urlString: String) {
-        guard let url = URL(string: urlString) else { return }
         image = nil
 
-        if let imageFromCache = CacheManager.shared.getCacheImage(key: urlString)  {
+        if let imageFromCache = CacheManager.shared.getCacheImage(key: urlString) {
             image = imageFromCache
             return
         }

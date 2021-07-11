@@ -15,7 +15,7 @@ class CacheManager: NSObject {
     private(set) var imageCache: NSCache<AnyObject, AnyObject> = NSCache()
 
     func getCacheImage(key: String) -> UIImage? {
-        if (self.imageCache.object(forKey: key as AnyObject) != nil) {
+        if self.imageCache.object(forKey: key as AnyObject) != nil {
             return self.imageCache.object(forKey: key as AnyObject) as? UIImage
         } else {
             return nil
