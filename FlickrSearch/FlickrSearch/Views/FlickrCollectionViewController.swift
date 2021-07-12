@@ -13,7 +13,6 @@ class FlickrCollectionViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchTextLabel: UILabel!
-    
     var searchTexts = [String]()
     var selected: String?
     var coreDataViewModel = CoreDataViewModel()

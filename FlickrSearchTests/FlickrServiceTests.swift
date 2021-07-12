@@ -93,12 +93,12 @@ class FlickrServiceTests: XCTestCase {
 
         ServiceManager.shared.request("", pageNo: 1) { (result) in
             switch result {
-            case .success( _):
+            case .success:
                 XCTFail("No result")
-            case .failure( _):
+            case .failure:
                 XCTAssert(true, "Success")
                 expct.fulfill()
-            case .error( _):
+            case .error:
                 XCTAssert(true, "Success")
                 expct.fulfill()
             }

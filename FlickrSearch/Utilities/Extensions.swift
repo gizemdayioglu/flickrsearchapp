@@ -29,7 +29,7 @@ extension UIImageView {
             case .success(let data):
                 CacheManager.shared.setCacheImage(key: urlString, image: data)
                 self.image = data
-            case .failure(_):
+            case .failure:
                 self.image = UIImage(named: "noImage")
             default:
                 break
