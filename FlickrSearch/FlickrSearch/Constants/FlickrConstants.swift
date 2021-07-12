@@ -18,4 +18,5 @@ class FlickrConstants: NSObject {
 
     static let defaultColumnCount: CGFloat = 2.0
     static let searchTextCharCount = 1
+    static let firstSearchText = "Kittens"
 }

@@ -22,7 +22,7 @@ class FlickrViewModel: NSObject {
         fetchResults(completion: completion)
     }
     private func fetchResults(completion:@escaping () -> Void) {
-        ServiceManager().request(searchText, pageNo: pageNo) { (result) in
+        ServiceManager.shared.request(searchText, pageNo: pageNo) { (result) in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):

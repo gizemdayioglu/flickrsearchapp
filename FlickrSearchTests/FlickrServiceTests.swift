@@ -21,7 +21,7 @@ class FlickrServiceTests: XCTestCase {
 
         let expct = expectation(description: "Returns all fields to create valid image url")
 
-        ServiceManager().request("kittens", pageNo: 1) { (result) in
+        ServiceManager.shared.request("kittens", pageNo: 1) { (result) in
 
             switch result {
             case .success(let results):
@@ -67,7 +67,7 @@ class FlickrServiceTests: XCTestCase {
     }
 
     func testValidSearchText() {
-        ServiceManager().request("dogs", pageNo: 1) { (result) in
+        ServiceManager.shared.request("dogs", pageNo: 1) { (result) in
             switch result {
             case .success(let results):
                 if results != nil {
@@ -91,7 +91,7 @@ class FlickrServiceTests: XCTestCase {
     func testSearchInvalidText() {
         let expct = expectation(description: "Error message")
 
-        ServiceManager().request("", pageNo: 1) { (result) in
+        ServiceManager.shared.request("", pageNo: 1) { (result) in
             switch result {
             case .success( _):
                 XCTFail("No result")

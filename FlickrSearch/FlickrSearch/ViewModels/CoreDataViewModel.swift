@@ -27,7 +27,7 @@ class CoreDataViewModel: NSObject {
 
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "SearchData")
         do {
-            let results:NSArray = try context.fetch(request) as NSArray
+            let results: NSArray = try context.fetch(request) as NSArray
             for result in results {
                 let searchedText = result as! SearchData
                 if !(searchedText.searchedText?.isNullOrEmpty())! {

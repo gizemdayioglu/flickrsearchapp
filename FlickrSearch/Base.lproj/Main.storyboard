@@ -27,11 +27,11 @@
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0Pg-ad-cvW">
-                                <rect key="frame" x="0.0" y="100" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="140" width="375" height="507"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tbA-Lg-pk3">
-                                <rect key="frame" x="0.0" y="100" width="375" height="567"/>
+                                <rect key="frame" x="0.0" y="140" width="375" height="527"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Z3c-X4-cbE">
                                     <size key="itemSize" width="50" height="50"/>
@@ -50,18 +50,27 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="al8-4V-jfx" userLabel="SearchText">
+                                <rect key="frame" x="10" y="106" width="345" height="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="al8-4V-jfx" secondAttribute="trailing" constant="20" id="1Ob-YY-k48"/>
                             <constraint firstItem="tbA-Lg-pk3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1Wr-Mr-107"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tbA-Lg-pk3" secondAttribute="trailing" id="C4e-bW-wET"/>
+                            <constraint firstItem="al8-4V-jfx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="Dx8-ia-1MP"/>
                             <constraint firstItem="0Pg-ad-cvW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Kee-QO-Ye8"/>
-                            <constraint firstItem="0Pg-ad-cvW" firstAttribute="top" secondItem="DJN-u2-FcB" secondAttribute="bottom" id="N1W-oV-9fL"/>
-                            <constraint firstItem="tbA-Lg-pk3" firstAttribute="top" secondItem="DJN-u2-FcB" secondAttribute="top" constant="56" id="Vb2-iR-3Bs"/>
+                            <constraint firstItem="0Pg-ad-cvW" firstAttribute="top" secondItem="al8-4V-jfx" secondAttribute="bottom" constant="10" id="LBN-Cz-0Zn"/>
+                            <constraint firstItem="al8-4V-jfx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="62" id="cug-yP-Jve"/>
                             <constraint firstItem="DJN-u2-FcB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fL2-Hw-ju5"/>
                             <constraint firstItem="DJN-u2-FcB" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="hLD-si-htd"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0Pg-ad-cvW" secondAttribute="bottom" constant="20" id="hnt-a4-iZf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tbA-Lg-pk3" secondAttribute="bottom" id="sN1-9r-o8A"/>
+                            <constraint firstItem="tbA-Lg-pk3" firstAttribute="top" secondItem="al8-4V-jfx" secondAttribute="bottom" constant="10" id="tei-Gd-R2e"/>
                             <constraint firstItem="0Pg-ad-cvW" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ubX-BG-a5Y"/>
                             <constraint firstItem="DJN-u2-FcB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wGH-nf-4q4"/>
                         </constraints>
@@ -71,6 +80,7 @@
                     <connections>
                         <outlet property="collectionView" destination="tbA-Lg-pk3" id="rNl-4h-fAY"/>
                         <outlet property="searchBar" destination="DJN-u2-FcB" id="GGz-R5-X1y"/>
+                        <outlet property="searchTextLabel" destination="al8-4V-jfx" id="4xL-rl-SNb"/>
                         <outlet property="tableView" destination="0Pg-ad-cvW" id="PWP-Y4-omO"/>
                     </connections>
                 </viewController>

@@ -12,6 +12,8 @@ class FlickrCollectionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchTextLabel: UILabel!
+    
     var searchTexts = [String]()
     var selected: String?
     var coreDataViewModel = CoreDataViewModel()
@@ -37,6 +39,8 @@ class FlickrCollectionViewController: UIViewController {
 extension FlickrCollectionViewController {
     fileprivate func configureUI() {
         // Do any additional setup after loading the view, typically from a nib.
+        searchBar.placeholder = "Search"
+        searchTextLabel.text = FlickrConstants.firstSearchText
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .automatic
         collectionView.delegate = self
@@ -57,7 +61,7 @@ extension FlickrCollectionViewController {
 }
 extension FlickrCollectionViewController {
     fileprivate func viewModelClosures() {
-        searchPhotos("Kittens")
+        searchPhotos(FlickrConstants.firstSearchText)
         dataUpdated()
     }
     private func searchPhotos(_ searchText: String) {
@@ -93,6 +97,7 @@ extension FlickrCollectionViewController: UITableViewDelegate, UITableViewDataSo
         let selectedText = searchTexts[indexPath.row]
         selected = selectedText
         searchPhotos(selected!)
+        searchTextLabel.text = selectedText
         dataUpdated()
         hideTableView()
     }
@@ -104,6 +109,7 @@ extension FlickrCollectionViewController: UISearchControllerDelegate, UISearchBa
 
         if !searchText.isNullOrEmpty() {
             searchPhotos(searchText)
+            searchTextLabel.text = searchText
             hideTableView()
         }
     }
@@ -124,6 +130,7 @@ extension FlickrCollectionViewController: UISearchControllerDelegate, UISearchBa
         if !text.isNullOrEmpty() {
             collectionView.reloadData()
             searchTexts.append(text)
+            searchTextLabel.text = text
             coreDataViewModel.setData(searchText: text)
             tableView.reloadData()
             hideTableView()
@@ -160,8 +167,9 @@ extension FlickrCollectionViewController: UICollectionViewDataSource {
 }
 
 extension FlickrCollectionViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (collectionView.bounds.width)/numberOfColumns,
                height: (collectionView.bounds.width)/numberOfColumns)
     }
