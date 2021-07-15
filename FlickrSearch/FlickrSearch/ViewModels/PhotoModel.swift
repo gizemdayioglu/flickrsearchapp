@@ -11,7 +11,9 @@ import UIKit
 struct PhotoModel {
 
     let imageURL: String
+    private let photo: FlickrPhoto
     init(withPhotos photo: FlickrPhoto) {
         imageURL = photo.imageURL
+        self.photo = photo
     }
 }

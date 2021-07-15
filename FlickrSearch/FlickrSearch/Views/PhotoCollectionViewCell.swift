@@ -14,7 +14,6 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     static let nibName = "PhotoCollectionViewCell"
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func prepareForReuse() {

@@ -9,15 +9,29 @@
 import UIKit
 import Alamofire
 import AlamofireImage
-import Reachability
 
-class ServiceManager: NSObject {
+enum APIError: String, Error {
+    case noInternetConnection = "Please check your Internet connection and try again."
+    case serverOverload = "Server is overloaded"
+    case permissionDenied = "You don't have permission"
+    case defaultError = "Something went wrong, Please try again later"
+}
+
+protocol ServiceManagerProtocol {
+    func request(_ searchText: String, pageNo: Int, completion: @escaping (_ photos: Result<FlickrPhotos?>) -> Void )
+}
+
+class ServiceManager: ServiceManagerProtocol {
     static let shared = ServiceManager()
-    static let errorMessage = "Something went wrong, Please try again later"
-    static let noInternetConnection = "Please check your Internet connection and try again."
     static let okResult = "OK"
-    func request(_ searchText: String, pageNo: Int, completion: @escaping (Result<FlickrPhotos?>) -> Void) {
+    func request(_ searchText: String, pageNo: Int, completion: @escaping (_ photos: Result<FlickrPhotos?>) -> Void ) {
+
         let urlString = String(format: FlickrConstants.searchURL, searchText, pageNo)
+
+        guard URL.init(string: urlString) != nil else {
+            return completion(.failure(APIError.defaultError.rawValue))
+        }
+
         AF.request(urlString).responseJSON { (responseData) in
             switch responseData.result {
             case .success:
@@ -28,10 +42,10 @@ class ServiceManager: NSObject {
                     if let stat = model.stat, stat.uppercased().contains(ServiceManager.okResult) {
                         return completion(.success(model.photos))
                     } else {
-                        return completion(.failure(ServiceManager.errorMessage))
+                        return completion(.failure(APIError.defaultError.rawValue))
                     }
                 } else {
-                    return completion(.failure(ServiceManager.errorMessage))
+                    return completion(.failure(APIError.defaultError.rawValue))
                 }
             case let .failure(error):
                 print("Json could not be created.", error)

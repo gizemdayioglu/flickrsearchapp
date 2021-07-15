@@ -10,6 +10,10 @@ import UIKit
 
 class FlickrViewModel: NSObject {
 
+    let apiService: ServiceManagerProtocol
+    init( apiService: ServiceManagerProtocol = ServiceManager()) {
+        self.apiService = apiService
+    }
     private(set) var photoArray = [FlickrPhoto]()
     private var searchText = ""
     private var pageNo = 1
@@ -22,7 +26,7 @@ class FlickrViewModel: NSObject {
         fetchResults(completion: completion)
     }
     private func fetchResults(completion:@escaping () -> Void) {
-        ServiceManager.shared.request(searchText, pageNo: pageNo) { (result) in
+        apiService.request(searchText, pageNo: pageNo) { (result) in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):

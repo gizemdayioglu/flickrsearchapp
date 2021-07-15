@@ -7,21 +7,25 @@
 //
 
 import XCTest
+@testable import FlickrSearch
 
 class FlickrServiceTests: XCTestCase {
 
+    var serviceManager: ServiceManager?
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        super.setUp()
+        serviceManager = ServiceManager()
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        serviceManager = nil
+        super.tearDown()
     }
     func testValidatePhotoImageURL() {
-
+        let srvcManager = self.serviceManager!
         let expct = expectation(description: "Returns all fields to create valid image url")
 
-        ServiceManager.shared.request("kittens", pageNo: 1) { (result) in
+        srvcManager.request("kittens", pageNo: 1) { (result) in
 
             switch result {
             case .success(let results):
@@ -67,11 +71,15 @@ class FlickrServiceTests: XCTestCase {
     }
 
     func testValidSearchText() {
-        ServiceManager.shared.request("dogs", pageNo: 1) { (result) in
+        let srvcManager = self.serviceManager!
+        let expct = expectation(description: "Returns json response")
+
+        srvcManager.request("dogs", pageNo: 1) { (result) in
             switch result {
             case .success(let results):
                 if results != nil {
                     XCTAssert(true, "Success")
+                    expct.fulfill()
                 } else {
                     XCTFail("No results")
                 }
@@ -89,9 +97,10 @@ class FlickrServiceTests: XCTestCase {
     }
 
     func testSearchInvalidText() {
+        let srvcManager = self.serviceManager!
         let expct = expectation(description: "Error message")
 
-        ServiceManager.shared.request("", pageNo: 1) { (result) in
+        srvcManager.request("", pageNo: 1) { (result) in
             switch result {
             case .success:
                 XCTFail("No result")
