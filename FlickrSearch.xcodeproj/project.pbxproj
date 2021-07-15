@@ -10,7 +10,6 @@
 		06421846085ECC07C7153241 /* Pods_FlickrSearchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF42D72403190E7A1097D83C /* Pods_FlickrSearchTests.framework */; };
 		562422AD26812F27007C3048 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 562422AC26812F27007C3048 /* Alamofire */; };
 		562422B02681B501007C3048 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 562422AF2681B501007C3048 /* AlamofireImage */; };
-		562422B526823124007C3048 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 562422B426823124007C3048 /* Reachability */; };
 		562422B72682366F007C3048 /* FlickrServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562422B62682366F007C3048 /* FlickrServiceTests.swift */; };
 		562422B926830364007C3048 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562422B826830364007C3048 /* Extensions.swift */; };
 		562422BB2684EC4C007C3048 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 562422BA2684EC4C007C3048 /* Podfile */; };
@@ -106,7 +105,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				562422AD26812F27007C3048 /* Alamofire in Frameworks */,
-				562422B526823124007C3048 /* Reachability in Frameworks */,
 				562422B02681B501007C3048 /* AlamofireImage in Frameworks */,
 				7BDBED41E355DB477C2100DF /* Pods_FlickrSearch.framework in Frameworks */,
 			);
@@ -306,7 +304,6 @@
 			packageProductDependencies = (
 				562422AC26812F27007C3048 /* Alamofire */,
 				562422AF2681B501007C3048 /* AlamofireImage */,
-				562422B426823124007C3048 /* Reachability */,
 			);
 			productName = FlickrSearch;
 			productReference = FD5BE8C9216154EF00BDBFC9 /* FlickrSearch.app */;
@@ -385,7 +382,6 @@
 			packageReferences = (
 				562422AB26812F27007C3048 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				562422AE2681B501007C3048 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
-				562422B326823124007C3048 /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = FD5BE8CA216154EF00BDBFC9 /* Products */;
 			projectDirPath = "";
@@ -874,14 +870,6 @@
 				minimumVersion = 4.2.0;
 			};
 		};
-		562422B326823124007C3048 /* XCRemoteSwiftPackageReference "Reachability" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -894,11 +882,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 562422AE2681B501007C3048 /* XCRemoteSwiftPackageReference "AlamofireImage" */;
 			productName = AlamofireImage;
-		};
-		562422B426823124007C3048 /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 562422B326823124007C3048 /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
 		};
 /* End XCSwiftPackageProductDependency section */
 
